@@ -37,3 +37,6 @@ find_path("Two walls", "#{path}/../resources/two_walls")
 find_path("Big Wall", "#{path}/../resources/big_wall")
 find_path("Stones", "#{path}/../resources/stones")
 
+puts Time.now
+find_path("Huge", "#{path}/../resources/huge")
+puts Time.now
