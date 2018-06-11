@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require 'pp' 
+require 'pry'
+require 'colorize'
+
+require_relative "../lib/algo_path/app"
+
+def find_path(name, folder)
+  map = AlgoPath::Map2D.load_from_file("#{folder}/field.txt")
+  sp = AlgoPath::ShortPath.new(map)
+  path = sp.find_path
+
+  if path
+    map.add_path(path)
+    puts "\n\nPath found for <<#{name}>>\n\n"
+  else
+    puts "\n\nNo path found <<#{name}>>\n\n"
+  end
+
+  print_colored(map)
+end
+
+def print_colored(map)
+  res = map.to_s
+  res.gsub!(map.symbols.land, map.symbols.land.green)
+  res.gsub!(map.symbols.wall, map.symbols.wall.red)
+  res.gsub!(map.symbols.gold, map.symbols.gold.yellow)
+  res.gsub!(map.symbols.user, map.symbols.user.yellow)
+  puts res
+end
+
+path = File.expand_path(File.dirname(__FILE__))
+
+find_path("Two walls", "#{path}/../resources/two_walls")
+find_path("Big Wall", "#{path}/../resources/big_wall")
+find_path("Stones", "#{path}/../resources/stones")
+
